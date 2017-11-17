@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的 
+	例如namespace="me.gacl.mapping.userMapper"就是me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀) -->
+<mapper namespace="com.mav.dao.ItMapper">
+	<sql id="Base_Column_List">
+		ITequipment.id,
+		ITequipment.equip_no,
+		agent.Dept_name,
+		ITequipment.dept_id,
+		ITequipment.username,
+		ITequipment.class status,
+		ITequipment.type,
+		ITequipment.belong,
+		ITequipment.sn,
+		ITequipment.model,
+		ITequipment.price,
+		ITequipment.memo,
+		ITequipment.startuse
+	</sql>
+
+	<sql id="common_where_if">
+		ITequipment.dept_id=agent.ID
+		<if test="status != ''">
+			and class = #{status}
+		</if>
+		<if test="type != ''">
+			and type = #{type}
+		</if>
+		<if test="belong != ''">
+			and belong = #{belong}
+		</if>
+		<if test="equip_no != ''">
+			and equip_no LIKE CONCAT(CONCAT('%',#{equip_no}),'%')
+		</if>
+		<if test="username != ''">
+			and username LIKE CONCAT(CONCAT('%',#{username}),'%')
+		</if>
+		<if test="dept_id != ''">
+			and dept_id like #{dept_id}
+		</if>
+		<if test="sn != ''">
+			and sn LIKE CONCAT(CONCAT('%',#{sn}),'%')
+		</if>
+	</sql>
+
+	<select id="getAllItWithMap" resultType="Map">
+		select
+		<include refid="Base_Column_List" />
+		FROM ITequipment, agent
+		<where>
+			<include refid="common_where_if" />
+		</where>
+		order by ITequipment.id desc LIMIT #{pgstr},#{pgsiz}
+	</select>
+	
+	<select id="getAllItWithMapCount" resultType="INTEGER">
+		select
+		count(*)
+		FROM ITequipment, agent
+		<where>
+			<include refid="common_where_if" />
+		</where>
+	</select>
+	
+	<select id="getItById" parameterType="INTEGER" resultType="java.util.HashMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM ITequipment, agent
+		WHERE ITequipment.dept_id=agent.ID AND
+		ITequipment.id = #{id}
+	</select>
+	<update id="updateByPrimaryKeySelective" parameterType="STRING">
+	   update ITequipment
+		   <set>
+		   <trim suffixOverrides=",">
+				<if test="status != ''">
+					class = #{status},
+				</if>
+				<if test="type != ''">
+					type = #{type},
+				</if>
+				<if test="belong != ''">
+					belong = #{belong},
+				</if>
+				<if test="equip_no != ''">
+					equip_no = #{equip_no},
+				</if>
+				<if test="dept_id != ''">
+					dept_id = #{dept_id},
+				</if>
+					username = #{username},
+					sn = #{sn},
+					model = #{model},
+					memo = #{memo},							
+					price = #{price,jdbcType=INTEGER},		
+					startuse = #{startuse,jdbcType=DATE},
+		   </trim>					   
+		   </set>
+	   where id = #{id,jdbcType=INTEGER}
+	</update>
+	 
+	<insert id="insertSelective" parameterType="STRING">
+	  insert into ITequipment
+	  <trim prefix="(" suffix=")" suffixOverrides=",">
+					<if test="status != ''">
+						class,
+					</if>
+					<if test="type != ''">
+						type,
+					</if>
+					<if test="belong != ''">
+						belong,
+					</if>
+					<if test="equip_no != ''">
+						equip_no,
+					</if>
+					<if test="dept_id != ''">
+						dept_id,
+					</if>
+					<if test="dept_id != ''">
+						dept_1,
+					</if>
+						username,
+						sn,
+						model,
+						memo,							
+						price,		
+						startuse,
+						id,
+	  </trim>
+	  <trim prefix="values (" suffix=")" suffixOverrides=",">
+					<if test="status != ''">
+						#{status},
+					</if>
+					<if test="type != ''">
+						#{type},
+					</if>
+					<if test="belong != ''">
+						#{belong},
+					</if>
+					<if test="equip_no != ''">
+						#{equip_no},
+					</if>
+					<if test="dept_id != ''">
+						#{dept_id},
+					</if>
+					<if test="dept_id != ''">
+						#{dept_id},
+					</if>
+						#{username},
+						#{sn},
+						#{model},
+						#{memo},							
+						#{price,jdbcType=INTEGER},		
+						#{startuse,jdbcType=DATE},
+						#{id,jdbcType=INTEGER},
+	  </trim>
+	</insert>
+	
+	<select id="getItMaxId" resultType="INTEGER">
+		select max(id) from ITequipment
+	</select>
+	
+	<delete id="delItByID" parameterType="INTEGER">
+		delete from ITequipment where id = #{id}
+	</delete>	
+
+</mapper>
