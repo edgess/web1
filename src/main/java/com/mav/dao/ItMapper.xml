@@ -20,7 +20,8 @@
 	</sql>
 
 	<sql id="common_where_if">
-		ITequipment.dept_id=agent.ID
+	
+		ITequipment.dept_id = agent.ID
 		<if test="status != ''">
 			and class = #{status}
 		</if>
@@ -37,7 +38,9 @@
 			and username LIKE CONCAT(CONCAT('%',#{username}),'%')
 		</if>
 		<if test="dept_id != ''">
-			and dept_id like #{dept_id}
+
+<!-- 			查部门应该查order_id，然后用前包含，而不因该是 dept_id = #{dept_id} -->
+			and agent.order_id LIKE CONCAT((select order_id from agent where agent.id=#{dept_id}),'%')
 		</if>
 		<if test="sn != ''">
 			and sn LIKE CONCAT(CONCAT('%',#{sn}),'%')
