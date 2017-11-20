@@ -12,15 +12,19 @@
 
 </head>
 <body>
-<%-- 	<c:if test="${page3 != null}">${page3.p1}-${page3.p2}-${page3.p3}-${page3.p4}-${page3.p5}-${page3.p6}-${page3.p7}</c:if> --%>
-	<form id="search_form" action="./list" method="POST" >
+<%-- ${page }<br>
 
+${page3 }<br> --%>
+	<form id="search_form" action="./list" method="POST" >
+		<c:if test="${!empty page}">
 <!-- 				a标签设定隐藏input的value，并且提交表单 -->
 				<a href="javascript:void(0)" onclick="document.getElementById('pgset').setAttribute('value',${page3.pageNo-1==0?1:page3.pageNo-1});document.getElementById('search_form').submit();" >&lt;上一页</a> 
 			 	--共 ${page3.resultCount} 条记录--共${page3.pageCount} 页--当前${page3.pageNo } 页--
 				<a href="javascript:void(0)" onclick="document.getElementById('pgset').setAttribute('value',${page3.pageNo==page3.pageCount?page3.pageNo:page3.pageNo+1});document.getElementById('search_form').submit();"> 下一页&gt;</a>
+		</c:if>
+
 <!-- 			隐藏input -->
-			<input id="pgset" type="hidden" name="pageNo" value="" />
+			<input id="pgset" type="hidden" name="pageNo" value="" /><input id="pgdel" type="hidden" name="pagedel" value="" />
 			<br>
 			<label>设备编号</label><input type="text" name="p4" value="${page3.p4}" />
 			<br>
@@ -102,6 +106,7 @@
 	</form>
 <!-- 	去add的control -->
 	<button onclick="javascript:window.location.href='./add'" >添加</button>
+	<c:if test="${!empty page}">
 	<table border=1px>
 		<tr>
 			<th>删除</th>
@@ -116,7 +121,14 @@
 		<c:forEach var="iteq" items="${page}">
 			<tr>
 <!-- 				添加删除按钮 -->
-				<td><button onclick="javascript:window.location.href='./del?id=${iteq.id}'" >删除</button></td>
+				<td>
+<%-- 					<button onclick="javascript:window.location.href='./del?id=${iteq.id}'" >删除</button> --%>
+<!-- 					修改form的action，插入id和pageNo到隐藏input，提交到del，为了删除后的回现问题 -->
+					<button onclick="document.getElementById('search_form').setAttribute('action','./del');
+									 document.getElementById('pgset').setAttribute('value',${page3.pageNo});
+									 document.getElementById('pgdel').setAttribute('value',${iteq.id});
+									 document.getElementById('search_form').submit();" >删除</button>
+				</td>
 <!-- 				添加修改按钮 -->
 				<td><a href="./edit?id=${iteq.id}"><c:out value="${iteq.equip_no}" /></a></td>
 				<td><c:out value="${iteq.username}" /></td>
@@ -153,5 +165,6 @@
 			</tr>
 		</c:forEach>
 	</table>
+	</c:if>
 </body>
 </html>
