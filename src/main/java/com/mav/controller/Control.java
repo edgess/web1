@@ -26,9 +26,9 @@ public class Control {
 
 	@RequestMapping("/list")
 	public String searchsent(
-			@RequestParam(value = "p1", required = false, defaultValue = "")String p1, 
+			@RequestParam(value = "p1", required = false, defaultValue = "A")String p1, 
 			@RequestParam(value = "p2", required = false, defaultValue = "")String p2, 
-			@RequestParam(value = "p3", required = false, defaultValue = "")String p3, 
+			@RequestParam(value = "p3", required = false, defaultValue = "Y")String p3, 
 			@RequestParam(value = "p4", required = false, defaultValue = "")String p4, 
 			@RequestParam(value = "p5", required = false, defaultValue = "")String p5, 
 			@RequestParam(value = "p6", required = false, defaultValue = "")String p6, 

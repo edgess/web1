@@ -22,6 +22,11 @@
 	<sql id="common_where_if">
 	
 		ITequipment.dept_id = agent.ID
+<!-- 		排除飞鹤、会展、旅汽 -->
+		and (agent.Dept_name NOT LIKE '%飞鹤航空%' and 
+			agent.Dept_name  NOT LIKE '%上航会展%' and
+			agent.Dept_name  NOT LIKE '%上航旅汽%')
+
 		<if test="status != ''">
 			and class = #{status}
 		</if>

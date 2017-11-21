@@ -19,7 +19,13 @@ ${page3 }<br> --%>
 		<c:if test="${!empty page}">
 <!-- 				a标签设定隐藏input的value，并且提交表单 -->
 				<a href="javascript:void(0)" onclick="document.getElementById('pgset').setAttribute('value',${page3.pageNo-1==0?1:page3.pageNo-1});document.getElementById('search_form').submit();" >&lt;上一页</a> 
-			 	--共 ${page3.resultCount} 条记录--共${page3.pageCount} 页--当前${page3.pageNo } 页--
+			 	--共 ${page3.resultCount} 条记录-
+			 	
+			 	<c:forEach var="i" begin="1" end="${page3.pageCount}" step="1">   
+					<a href="javascript:void(0)" onclick="document.getElementById('pgset').setAttribute('value',${i});document.getElementById('search_form').submit();"> ${i}</a>
+				</c:forEach> 
+			 	
+			 	-当前第${page3.pageNo } 页--
 				<a href="javascript:void(0)" onclick="document.getElementById('pgset').setAttribute('value',${page3.pageNo==page3.pageCount?page3.pageNo:page3.pageNo+1});document.getElementById('search_form').submit();"> 下一页&gt;</a>
 		</c:if>
 
