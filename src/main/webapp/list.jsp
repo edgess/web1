@@ -45,9 +45,11 @@ ${page3 }<br> --%>
 						<c:forEach items="${page2}" var="dep" varStatus="status">
 							<c:if test="${page3.p6 == dep.id}" >${dep.dept_name}</c:if>
 	               		</c:forEach>
+	               		<c:if test="${page3.p6 == '999'}" >管理部门</c:if>
 	               		<c:if test="${page3.p6 == ''}" >全部</c:if>
 					</option>
 					<option value="">全部</option>
+					<option value="999">管理部门</option>
 	                <c:forEach items="${page2}" var="dep" varStatus="status">
 	                         <option value="${dep.id}">${dep.dept_name}</option>
 	                </c:forEach>
@@ -101,8 +103,8 @@ ${page3 }<br> --%>
 						    <c:otherwise>全部</c:otherwise>
 						</c:choose>
 					</option>
-					<option value="Y">国旅资产</option>
 					<option value="">全部</option>
+					<option value="Y">国旅资产</option>
 					<option value="G">挂靠设备</option>
 					<option value="N">自有设备</option>
 					<option value="Z">获赠资产</option>

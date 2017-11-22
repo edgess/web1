@@ -15,7 +15,15 @@ public interface ItMapper {
 			@Param("belong") String c, @Param("equip_no") String d, @Param("username") String e,
 			@Param("dept_id") String f, @Param("sn") String g, @Param("pgstr") Integer h, @Param("pgsiz") Integer i);
 
+	List<Map<Object, Object>> getMangerItWithMap(@Param("status") String a, @Param("type") String b,
+			@Param("belong") String c, @Param("equip_no") String d, @Param("username") String e,
+			@Param("dept_id") String f, @Param("sn") String g, @Param("pgstr") Integer h, @Param("pgsiz") Integer i);
+
 	Integer getAllItWithMapCount(@Param("status") String a, @Param("type") String b, @Param("belong") String c,
+			@Param("equip_no") String d, @Param("username") String e, @Param("dept_id") String f,
+			@Param("sn") String g);
+
+	Integer getMangerItWithMapCount(@Param("status") String a, @Param("type") String b, @Param("belong") String c,
 			@Param("equip_no") String d, @Param("username") String e, @Param("dept_id") String f,
 			@Param("sn") String g);
 

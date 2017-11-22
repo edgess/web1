@@ -42,11 +42,7 @@
 		<if test="username != ''">
 			and username LIKE CONCAT(CONCAT('%',#{username}),'%')
 		</if>
-		<if test="dept_id != ''">
 
-<!-- 			查部门应该查order_id，然后用前包含，而不因该是 dept_id = #{dept_id} -->
-			and agent.order_id LIKE CONCAT((select order_id from agent where agent.id=#{dept_id}),'%')
-		</if>
 		<if test="sn != ''">
 			and sn LIKE CONCAT(CONCAT('%',#{sn}),'%')
 		</if>
@@ -58,6 +54,21 @@
 		FROM ITequipment, agent
 		<where>
 			<include refid="common_where_if" />
+			<if test="dept_id != ''">
+<!-- 			查部门应该查order_id，然后用前包含，而不因该是 dept_id = #{dept_id} -->
+				and agent.order_id LIKE CONCAT((select order_id from agent where agent.id=#{dept_id}),'%')
+			</if>
+		</where>
+		order by ITequipment.id desc LIMIT #{pgstr},#{pgsiz}
+	</select>
+	
+	<select id="getMangerItWithMap" resultType="Map">
+		select
+		<include refid="Base_Column_List" />
+		FROM ITequipment, agent
+		<where>
+			<include refid="common_where_if" />
+			and agent.order_id in ('00','01','02','03','04','10','12','13','14','15')
 		</where>
 		order by ITequipment.id desc LIMIT #{pgstr},#{pgsiz}
 	</select>
@@ -68,6 +79,20 @@
 		FROM ITequipment, agent
 		<where>
 			<include refid="common_where_if" />
+			<if test="dept_id != ''">
+<!-- 			查部门应该查order_id，然后用前包含，而不因该是 dept_id = #{dept_id} -->
+				and agent.order_id LIKE CONCAT((select order_id from agent where agent.id=#{dept_id}),'%')
+			</if>
+		</where>
+	</select>
+	
+	<select id="getMangerItWithMapCount" resultType="INTEGER">
+		select
+		count(*)
+		FROM ITequipment, agent
+		<where>
+			<include refid="common_where_if" />
+			and agent.order_id in ('00','01','02','03','04','10','12','13','14','15')
 		</where>
 	</select>
 	

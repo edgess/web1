@@ -8,6 +8,7 @@
 			id,
 			dept_name
 		FROM agent
+		WHERE agent.agent_type LIKE '%直销网点%' OR agent.agent_type  LIKE '%公司部门%'
 		ORDER BY order_id
 	</select>
 

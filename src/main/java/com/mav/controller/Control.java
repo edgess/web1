@@ -26,9 +26,9 @@ public class Control {
 
 	@RequestMapping("/list")
 	public String searchsent(
-			@RequestParam(value = "p1", required = false, defaultValue = "A")String p1, 
+			@RequestParam(value = "p1", required = false, defaultValue = "")String p1, 
 			@RequestParam(value = "p2", required = false, defaultValue = "")String p2, 
-			@RequestParam(value = "p3", required = false, defaultValue = "Y")String p3, 
+			@RequestParam(value = "p3", required = false, defaultValue = "")String p3, 
 			@RequestParam(value = "p4", required = false, defaultValue = "")String p4, 
 			@RequestParam(value = "p5", required = false, defaultValue = "")String p5, 
 			@RequestParam(value = "p6", required = false, defaultValue = "")String p6, 
@@ -47,11 +47,20 @@ public class Control {
 			}
 		} catch (Exception e) {
 		}
-		// 分页带参查询数据
 		List<Map<Object, Object>> page = new ArrayList<Map<Object, Object>>();
-		page = itMapper.getAllItWithMap(p1, p2, p3, p4, p5, p6, p7, (pgstr - 1) * pgsiz, pgsiz);
-		// 带参数据总数
-		int resultCount = itMapper.getAllItWithMapCount(p1, p2, p3, p4, p5, p6, p7);
+		int resultCount = 0;
+//		管理分类判断
+		if (p6.equals("999")){
+			// 分页带参查询数据
+			page = itMapper.getMangerItWithMap(p1, p2, p3, p4, p5, p6, p7, (pgstr - 1) * pgsiz, pgsiz);
+			// 带参数据总数
+			resultCount = itMapper.getMangerItWithMapCount(p1, p2, p3, p4, p5, p6, p7);
+		}else{
+			// 分页带参查询数据
+			page = itMapper.getAllItWithMap(p1, p2, p3, p4, p5, p6, p7, (pgstr - 1) * pgsiz, pgsiz);
+			// 带参数据总数
+			resultCount = itMapper.getAllItWithMapCount(p1, p2, p3, p4, p5, p6, p7);			
+		}
 		// 查部门
 		List<Map<Object, Object>> page2 = new ArrayList<Map<Object, Object>>();
 		page2 = agent.getDeptName();
@@ -97,9 +106,6 @@ public class Control {
 	@RequestMapping("/doedit")
 	public String doedit(String p0, String p1, String p2, String p3, String p4, String p5, String p6, String p7,
 			String p8, String p9, String p10, String p11) throws ParseException {
-		// System.out.println(p1 + "-" + p2 + "-" + p3 + "-" + p4 + "-" + p5 +
-		// "-" + p6 + "-" + p7 + "-" + p8 + "-" + p9
-		// + "-" + p10 + "-" + p11);
 		// id号强转
 		int p0i = Integer.parseInt(p0);
 		// 默认日期设定
@@ -151,16 +157,13 @@ public class Control {
 		Integer p0i = itMapper.getItMaxId() + 1;
 		itMapper.insertSelective(p1, p2, p3, p4, p5, p6, p7, p8, p9i, p10, p11d, p0i);
 //		System.out.println("add" +"-"+p1 +"-"+ p2 +"-"+ p3 +"-"+ p4 +"-"+ p5 +"-"+ p6);
-
 		return "forward:/list";
-//		return "redirect:/list";
 	}
 
 	@RequestMapping("/del")
 	public String del(String pagedel) {
 		int p9i = Integer.parseInt(pagedel);
 		itMapper.delItByID(p9i);
-		// 带数据回现
 		return "forward:/list";
 	}
 }
