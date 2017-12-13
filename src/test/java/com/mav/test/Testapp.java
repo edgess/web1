@@ -1,9 +1,5 @@
 package com.mav.test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +34,19 @@ public class Testapp {
 	// System.out.println(map);
 	// }
 
+	// @Test
+	// public void test3() {
+	// List<Map<Object, Object>> map = new ArrayList<Map<Object, Object>>();
+	// map = agent.getDeptName();
+	// System.out.println(map);
+	// }
+
+
 	@Test
-	public void test3() {
-		List<Map<Object, Object>> map = new ArrayList<Map<Object, Object>>();
-		map = agent.getDeptName();
-		System.out.println(map);
+	public void test2() {
+
+		System.out.println(itMapper.getAllItWithMap("", "", "", "", "", "", "", 1, 2));
+		System.out.println(itMapper.getAllItWithMapCount("", "", "", "", "", "", ""));
 	}
 
 }

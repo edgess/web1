@@ -34,7 +34,7 @@ public class Control {
 			@RequestParam(value = "p6", required = false, defaultValue = "")String p6, 
 			@RequestParam(value = "p7", required = false, defaultValue = "")String p7,
 			@RequestParam(value = "pageNo", required = false, defaultValue = "1") String pageNoStr,
-			@RequestParam(value = "edge", required = false, defaultValue = "") String edge,
+//			@RequestParam(value = "edge", required = false, defaultValue = "") String edge,
 			Map<String, Object> map){
 		// 单页显示数设置
 		int pgsiz = 20;
@@ -52,12 +52,18 @@ public class Control {
 //		管理分类判断
 		if (p6.equals("999")){
 			// 分页带参查询数据
-			page = itMapper.getMangerItWithMap(p1, p2, p3, p4, p5, p6, p7, (pgstr - 1) * pgsiz, pgsiz);
+			//mysql
+//			page = itMapper.getMangerItWithMap(p1, p2, p3, p4, p5, p6, p7, (pgstr - 1) * pgsiz, pgsiz);
+			//sqlserver
+			page = itMapper.getMangerItWithMap(p1, p2, p3, p4, p5, p6, p7, pgstr, pgsiz);
 			// 带参数据总数
 			resultCount = itMapper.getMangerItWithMapCount(p1, p2, p3, p4, p5, p6, p7);
 		}else{
 			// 分页带参查询数据
-			page = itMapper.getAllItWithMap(p1, p2, p3, p4, p5, p6, p7, (pgstr - 1) * pgsiz, pgsiz);
+			//mysql
+//			page = itMapper.getAllItWithMap(p1, p2, p3, p4, p5, p6, p7, (pgstr - 1) * pgsiz, pgsiz);
+			//sqlserver
+			page = itMapper.getAllItWithMap(p1, p2, p3, p4, p5, p6, p7, pgstr, pgsiz);
 			// 带参数据总数
 			resultCount = itMapper.getAllItWithMapCount(p1, p2, p3, p4, p5, p6, p7);			
 		}

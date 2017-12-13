@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="yz.jsp"></jsp:include>
 <form action="./doedit" method="POST" >
 	
 	<label>设备编号</label><input type="text" name="p4" value="${page[0].equip_no}"/>

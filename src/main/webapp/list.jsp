@@ -1,20 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <title>Insert title here</title>
-
 </head>
 <body>
-<%-- ${page }<br>
-
-${page3 }<br> --%>
+<jsp:include page="yz.jsp"></jsp:include>
 	<form id="search_form" action="./list" method="POST" >
 		<c:if test="${!empty page}">
 <!-- 				a标签设定隐藏input的value，并且提交表单 -->
@@ -132,10 +126,10 @@ ${page3 }<br> --%>
 				<td>
 <%-- 					<button onclick="javascript:window.location.href='./del?id=${iteq.id}'" >删除</button> --%>
 <!-- 					修改form的action，插入id和pageNo到隐藏input，提交到del，为了删除后的回现问题 -->
-					<button onclick="document.getElementById('search_form').setAttribute('action','./del');
+					<button onclick="if(confirm('确定删除吗 ？')){document.getElementById('search_form').setAttribute('action','./del');
 									 document.getElementById('pgset').setAttribute('value',${page3.pageNo});
 									 document.getElementById('pgdel').setAttribute('value',${iteq.id});
-									 document.getElementById('search_form').submit();" >删除</button>
+									 document.getElementById('search_form').submit();}" >删除</button>
 				</td>
 <!-- 				添加修改按钮 -->
 				<td><a href="./edit?id=${iteq.id}"><c:out value="${iteq.equip_no}" /></a></td>
