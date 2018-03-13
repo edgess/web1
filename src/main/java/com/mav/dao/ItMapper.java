@@ -33,10 +33,9 @@ public interface ItMapper {
 			@Param("model") String h, @Param("price") Integer i, @Param("memo") String j, @Param("startuse") Date k,
 			@Param("id") Integer l);
 
-	void insertSelective(@Param("status") String a, @Param("type") String b, @Param("belong") String c,
-			@Param("equip_no") String d, @Param("username") String e, @Param("dept_id") String f, @Param("sn") String g,
-			@Param("model") String h, @Param("price") Integer i, @Param("memo") String j, @Param("startuse") Date k,
-			@Param("id") Integer l);
+	void insertSelective(@Param("status") String status, @Param("type") String type, @Param("belong") String belong,
+			@Param("equip_no") String equip_no, @Param("username") String username, @Param("dept_id") String dept_id, @Param("sn") String sn,
+			@Param("model") String model, @Param("price") Integer price, @Param("memo") String memo, @Param("startuse") Date startuse);
 
 	Integer getItMaxId();
 

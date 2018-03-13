@@ -15,14 +15,14 @@
 		ITequipment.model,
 		ITequipment.price,
 		ITequipment.memo,
-		ITequipment.startuse
+		ITequipment.startuse,
+		cwit.cwstr
 	</sql>
 
 	<sql id="common_where_if">
-	
-		ITequipment.dept_id = agent.ID
-<!-- 		排除飞鹤、会展、旅汽 -->
-		and (agent.Dept_name NOT LIKE '%飞鹤航空%' and 
+
+			<!-- 排除飞鹤、会展、旅汽 -->
+			(agent.Dept_name NOT LIKE '%飞鹤航空%' and 
 			agent.Dept_name  NOT LIKE '%上航会展%' and
 			agent.Dept_name  NOT LIKE '%上航旅汽%')
 
@@ -53,7 +53,9 @@
 		select
 			ROW_NUMBER() over(order by ITequipment.id DESC) as pnum,
 			<include refid="Base_Column_List" />
-		FROM ITequipment, agent
+		FROM ITequipment
+		LEFT JOIN  agent ON ITequipment.dept_id = agent.ID
+		LEFT JOIN cwit ON cwit.cwid=ITequipment.id
 		<where>
 			<include refid="common_where_if" />
 			<if test="dept_id != ''">
@@ -71,7 +73,9 @@
 		select
 			ROW_NUMBER() over(order by ITequipment.id DESC) as pnum,
 			<include refid="Base_Column_List" />
-		FROM ITequipment, agent
+		FROM ITequipment
+		LEFT JOIN  agent ON ITequipment.dept_id = agent.ID
+		LEFT JOIN cwit ON cwit.cwid=ITequipment.id
 		<where>
 			<include refid="common_where_if" />
 			and agent.order_id in ('00','01','02','03','04','10','12','13','14','15')
@@ -83,7 +87,9 @@
 	<select id="getAllItWithMapCount" resultType="INTEGER">
 		select
 		count(*)
-		FROM ITequipment, agent
+		FROM ITequipment
+		LEFT JOIN  agent ON ITequipment.dept_id = agent.ID
+		LEFT JOIN cwit ON cwit.cwid=ITequipment.id
 		<where>
 			<include refid="common_where_if" />
 			<if test="dept_id != ''">
@@ -96,7 +102,9 @@
 	<select id="getMangerItWithMapCount" resultType="INTEGER">
 		select
 		count(*)
-		FROM ITequipment, agent
+		FROM ITequipment
+		LEFT JOIN  agent ON ITequipment.dept_id = agent.ID
+		LEFT JOIN cwit ON cwit.cwid=ITequipment.id
 		<where>
 			<include refid="common_where_if" />
 			and agent.order_id in ('00','01','02','03','04','10','12','13','14','15')
@@ -106,10 +114,13 @@
 	<select id="getItById" parameterType="INTEGER" resultType="java.util.HashMap">
 		SELECT
 		<include refid="Base_Column_List" />
-		FROM ITequipment, agent
-		WHERE ITequipment.dept_id=agent.ID AND
+		FROM ITequipment
+		LEFT JOIN  agent ON ITequipment.dept_id = agent.ID
+		LEFT JOIN cwit ON cwit.cwid=ITequipment.id
+		WHERE
 		ITequipment.id = #{id}
 	</select>
+	
 	<update id="updateByPrimaryKeySelective" parameterType="STRING">
 	   update ITequipment
 		   <set>
@@ -166,8 +177,7 @@
 						model,
 						memo,							
 						price,		
-						startuse,
-						id,
+						startuse
 	  </trim>
 	  <trim prefix="values (" suffix=")" suffixOverrides=",">
 					<if test="status != ''">
@@ -194,7 +204,6 @@
 						#{memo},							
 						#{price,jdbcType=INTEGER},		
 						#{startuse,jdbcType=DATE},
-						#{id,jdbcType=INTEGER},
 	  </trim>
 	</insert>
 	
